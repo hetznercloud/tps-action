@@ -9,7 +9,8 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: |
+    - shell: bash
+      run: |
         token="${{ inputs.token }}"
 
         if [[ -z "$token" ]]; then
@@ -28,4 +29,3 @@ runs:
 
         echo "::add-mask::$token"
         echo "HCLOUD_TOKEN=$token" >> "$GITHUB_ENV"
-     shell: bash
