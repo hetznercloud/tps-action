@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  pull_request: {}
+  push:
+    branches: [main]
+
+jobs:
+  verify-action:
+    permissions:
+      id-token: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Run tps-action
+        uses: ./
+        with:
+          token: ${{ secrets.HCLOUD_TOKEN  }}
+
+      - uses: 3bit/setup-hcloud@v2
+
+      - run: hcloud server-type list
