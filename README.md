@@ -37,3 +37,7 @@ jobs:
         # subsequent steps in the same job can use it.
         run: hcloud server-type list
 ```
+
+## License
+
+MIT License
