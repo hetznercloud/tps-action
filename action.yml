@@ -1,11 +1,16 @@
 name: tps
 description: Request tokens from TPS
+branding:
+  color: red
+  icon: briefcase
+
 inputs:
   tps-url:
     description: TPS endpoint URL
     default: https://tps.hc-integrations.de/
   token:
     description: Static HCLOUD_TOKEN, will be used if provided, otherwise a token will be fetched from TPS.
+
 runs:
   using: composite
   steps:
