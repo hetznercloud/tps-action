@@ -14,7 +14,8 @@ inputs:
 runs:
   using: composite
   steps:
-    - shell: bash
+    - name: Get Token
+      shell: bash
       run: |
         token="${{ inputs.token }}"
 
