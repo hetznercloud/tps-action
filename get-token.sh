@@ -17,6 +17,16 @@ do_request() {
 # get_ci_token
 get_ci_token() {
   log "Requesting CI token"
+
+  if [[ -z "$ACTIONS_ID_TOKEN_REQUEST_URL" ]]; then
+    log "ACTIONS_ID_TOKEN_REQUEST_URL is empty"
+    exit 1
+  fi
+  if [[ -z "$ACTIONS_ID_TOKEN_REQUEST_TOKEN" ]]; then
+    log "ACTIONS_ID_TOKEN_REQUEST_TOKEN is empty"
+    exit 1
+  fi
+
   do_request \
     --header "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
     "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=tps" |
