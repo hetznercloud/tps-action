@@ -24,11 +24,11 @@ get_gha_token() {
   log "Requesting Github Action token"
 
   if [[ -z "$ACTIONS_ID_TOKEN_REQUEST_URL" ]]; then
-    log "ACTIONS_ID_TOKEN_REQUEST_URL is empty"
+    log "::error::ACTIONS_ID_TOKEN_REQUEST_URL is empty"
     exit 1
   fi
   if [[ -z "$ACTIONS_ID_TOKEN_REQUEST_TOKEN" ]]; then
-    log "ACTIONS_ID_TOKEN_REQUEST_TOKEN is empty"
+    log "::error::ACTIONS_ID_TOKEN_REQUEST_TOKEN is empty"
     exit 1
   fi
 
@@ -54,7 +54,7 @@ if [[ -z "$hcloud_token" ]]; then
 fi
 
 if [[ "${hcloud_token:-}" == "" ]]; then
-  echo "::error ::Couldn't determine HCLOUD_TOKEN. Are repository secrets correctly set?"
+  log "::error::Couldn't determine HCLOUD_TOKEN. Are repository secrets correctly set?"
   exit 1
 fi
 
