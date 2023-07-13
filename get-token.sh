@@ -15,7 +15,7 @@ do_request() {
     --fail-with-body \
     --retry 2 \
     --silent \
-    --user-agent "tps-action/unkown" \
+    --user-agent "tps-action/unknown" \
     "$@"
 }
 
