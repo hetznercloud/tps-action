@@ -11,7 +11,12 @@ log() {
 
 # do_request [<args>...]
 do_request() {
-  curl --fail-with-body --retry 2 --silent "$@"
+  curl \
+    --fail-with-body \
+    --retry 2 \
+    --silent \
+    --user-agent "tps-action/unknown" \
+    "$@"
 }
 
 # get_ci_token
