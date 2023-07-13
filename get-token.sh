@@ -2,8 +2,8 @@
 
 set -eu
 
-TPS_URL="$1"
-TOKEN="$2"
+tps_url="$1"
+hcloud_token="$2"
 
 log() {
   echo >&2 "$*"
@@ -19,9 +19,9 @@ do_request() {
     "$@"
 }
 
-# get_ci_token
-get_ci_token() {
-  log "Requesting CI token"
+# get_gha_token
+get_gha_token() {
+  log "Requesting Github Action token"
 
   if [[ -z "$ACTIONS_ID_TOKEN_REQUEST_URL" ]]; then
     log "ACTIONS_ID_TOKEN_REQUEST_URL is empty"
@@ -38,25 +38,25 @@ get_ci_token() {
     jq -r .value
 }
 
-# get_token <ci_token>
-get_token() {
-  log "Requesting token"
+# get_hcloud_token <gha_token>
+get_hcloud_token() {
+  log "Requesting HCloud token"
   do_request --request POST \
     --header "Authorization: Bearer $1" \
-    "$TPS_URL"
+    "$tps_url"
 }
 
-if [[ -z "$TOKEN" ]]; then
+if [[ -z "$hcloud_token" ]]; then
   # Static HCLOUD_TOKEN not provided, fetch a token from TPS.
-  CI_TOKEN=$(get_ci_token)
+  gha_token=$(get_gha_token)
 
-  TOKEN="$(get_token "$CI_TOKEN")"
+  hcloud_token="$(get_hcloud_token "$gha_token")"
 fi
 
-if [[ "${TOKEN:-}" == "" ]]; then
+if [[ "${hcloud_token:-}" == "" ]]; then
   echo "::error ::Couldn't determine HCLOUD_TOKEN. Are repository secrets correctly set?"
   exit 1
 fi
 
-echo "::add-mask::$TOKEN"
-echo "HCLOUD_TOKEN=$TOKEN" >> "$GITHUB_ENV"
+echo "::add-mask::$hcloud_token"
+echo "HCLOUD_TOKEN=$hcloud_token" >> "$GITHUB_ENV"
