@@ -3,7 +3,8 @@
 set -eu
 
 tps_url="$1"
-hcloud_token="$2"
+tps_token="$2"
+hcloud_token="$3"
 
 log() {
   echo >&2 "$*"
@@ -46,11 +47,15 @@ get_hcloud_token() {
     "$tps_url"
 }
 
+# If HCLOUD_TOKEN is not provided, fetch a token from TPS.
 if [[ -z "$hcloud_token" ]]; then
-  # Static HCLOUD_TOKEN not provided, fetch a token from TPS.
-  gha_token=$(get_gha_token)
 
-  hcloud_token="$(get_hcloud_token "$gha_token")"
+  # If TPS token is not provided, use Github Actions ID tokens.
+  if [[ -z "$tps_token" ]]; then
+    tps_token=$(get_gha_token)
+  fi
+
+  hcloud_token="$(get_hcloud_token "$tps_token")"
 fi
 
 if [[ "${hcloud_token:-}" == "" ]]; then

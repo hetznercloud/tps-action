@@ -6,8 +6,10 @@ branding:
 
 inputs:
   tps-url:
-    description: TPS endpoint URL
-    default: https://tps.hc-integrations.de/
+    description: TPS endpoint URL.
+    default: https://tps.hc-integrations.de
+  tps-token:
+    description: TPS token, if not provided, Github Actions OIDC tokens will be used.
   token:
     description: Static HCLOUD_TOKEN, will be used if provided, otherwise a token will be fetched from TPS.
 
@@ -17,5 +19,6 @@ runs:
     - run: >
         "${{ github.action_path }}/get-token.sh"
         "${{ inputs.tps-url }}"
+        "${{ inputs.tps-token }}"
         "${{ inputs.token }}"
       shell: bash
