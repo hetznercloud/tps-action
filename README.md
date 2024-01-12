@@ -31,7 +31,7 @@ jobs:
           # or for usage from a fork where the oauth permissions are not available.
           token: ${{ secrets.HCLOUD_TOKEN  }}
 
-      - uses: 3bit/setup-hcloud@v2
+      - uses: hetznercloud/setup-hcloud@v1
 
       - # The action set the environment variable HCLOUD_TOKEN, so all
         # subsequent steps in the same job can use it.

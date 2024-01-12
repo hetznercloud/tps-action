@@ -21,6 +21,6 @@ jobs:
         with:
           token: ${{ secrets.HCLOUD_TOKEN  }}
 
-      - uses: 3bit/setup-hcloud@v2
+      - uses: hetznercloud/setup-hcloud@v1
 
       - run: hcloud server-type list
