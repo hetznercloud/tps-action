@@ -13,7 +13,7 @@ log() {
 # do_request [<args>...]
 do_request() {
   curl \
-    --fail-with-body \
+    --fail \
     --retry 2 \
     --silent \
     --user-agent "tps-action/unknown" \
@@ -44,7 +44,10 @@ get_hcloud_token() {
   log "Requesting HCloud token"
   do_request --request POST \
     --header "Authorization: Bearer $1" \
-    "$tps_url"
+    "$tps_url" || {
+      log '::error::Failed to get token from TPS'
+      exit 1
+    }
 }
 
 # If HCLOUD_TOKEN is not provided, fetch a token from TPS.
