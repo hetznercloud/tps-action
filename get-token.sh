@@ -68,3 +68,4 @@ fi
 
 echo "::add-mask::$hcloud_token"
 echo "HCLOUD_TOKEN=$hcloud_token" >> "$GITHUB_ENV"
+echo "HETZNER_TOKEN=$hcloud_token" >> "$GITHUB_ENV"
